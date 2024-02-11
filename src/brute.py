@@ -134,11 +134,11 @@ def choose_best_path(possible_paths, sequences, rewards):
     return best_path, max_reward, best_idx
 # Contoh matriks dari ilustrasi kasus
 matrix = [
-    ['BD', '1C', '1C', '1C', '1C'],
-    ['BD', '55', '55', 'BD', 'E9'],
-    ['1C', 'E9', '1C', '55', 'BD'],
-    ['1C', '1C', '55', 'E9', 'BD'],
-    ['55', 'BD', 'E9', '55', 'BD'],
+    ['E9', '1C', '55', '1C', 'BD'],
+    ['55', '55', '1C', 'E9', 'BD'],
+    ['E9', '55', 'E9', '7A', '1C'],
+    ['55', 'BD', 'E9', '1C', '7A'],
+    ['BD', '7A', '7A', '7A', 'BD']
 ]
 
 buffer_size = 6
