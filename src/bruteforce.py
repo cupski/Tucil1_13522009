@@ -9,110 +9,87 @@ class BruteForceSolver:
         self.rewards = rewards
 
     def get_routes(self, matrix, buffer_size):
-        routes = []
-        route = []
-        coords = []
-        coord = []
-        best_routes = []
-        best_coords = []
-        num_rows = len(matrix)
-        num_columns = len(matrix[0])
-        curr_seq = -1
+            routes = []
+            route = []
+            coords = []
+            coord = []
+            num_rows = len(matrix)
+            num_columns = len(matrix[0])
+            curr_seq = -1
 
-        # Loop melalui setiap kolom untuk memulai rute
-        for row in range(num_rows):
-            route.clear()
-            coord.clear()
-            # Memilih satu token pada posisi baris paling atas
-            route.append(matrix[0][row])
-            coord.append([0, row])
-            # Inisialisasi rute baru
-            first = True
-            vertical = True  # True untuk gerakan horizontal, False untuk gerakan vertikal
-            # Loop untuk membangun rute dengan pola horizontal, vertikal, horizontal, vertikal
-            while len(route) < buffer_size + 1:
-                if not first:
-                    route.clear()
-                    coord.clear()
-                if vertical:
-                    #elemen pertama
-                    if first:
-                        for curr_col in range(num_columns):
-                            if curr_col != 0:
-                                route.append(matrix[curr_col][row])
-                                coord.append([curr_col,row])
-                                # Jika sudah mencapai panjang buffer atau panjang minimal rute
-                                if len(route) < buffer_size:
-                                    routes.append(route[:])  
-                                    coords.append(coord[:])
-                                    route.pop()
-                                    coord.pop()
-                                elif len(route) == buffer_size:
-                                    best_routes.append(route[:])
-                                    best_coords.append(coord[:])
-                                    routes.append(route[:])  
-                                    coords.append(coord[:])
-                                    route.pop()
-                                    coord.pop()
-                                else:
-                                    curr_seq = len(routes) - 1
-                                    break
-                        first = False
-                        vertical = False
+            # Loop melalui setiap kolom untuk memulai rute
+            for col in range(num_columns):
+                route.clear()
+                coord.clear()
+                # Memilih satu token pada posisi baris paling atas
+                route.append(matrix[0][col])
+                coord.append([0, col])
+                # Inisialisasi rute baru
+                first = True
+                vertical = True  # True untuk gerakan horizontal, False untuk gerakan vertikal
+                # Loop untuk membangun rute dengan pola horizontal, vertikal, horizontal, vertikal
+                while len(route) < buffer_size + 1:
+                    if not first:
+                        route.clear()
+                        coord.clear()
+                    if vertical:
+                        #elemen pertama
+                        if first:
+                            for curr_row in range(num_columns):
+                                if curr_row != 0:
+                                    route.append(matrix[curr_row][col])
+                                    coord.append([curr_row,col])
+                                    # Jika sudah mencapai panjang buffer atau panjang minimal rute
+                                    if 2 <= len(route) <= buffer_size:
+                                        routes.append(route[:])  
+                                        coords.append(coord[:])
+                                        route.pop()
+                                        coord.pop()
+                                    else:
+                                        curr_seq = len(routes) - 1
+                                        break
+                            first = False
+                            vertical = False
+                        else:
+                            route = routes[curr_seq].copy()
+                            coord = coords[curr_seq].copy()
+                            for curr_row in range(num_rows):
+                                if ([curr_row, coord[-1][1]] not in coord):
+                                    route.append(matrix[curr_row][coord[-1][1]])
+                                    coord.append([curr_row,coord[-1][1]])
+                                    if 2 <= len(route) <= buffer_size:
+                                        routes.append(route[:])  
+                                        coords.append(coord[:])
+                                        route.pop()
+                                        coord.pop()
+                                    else:
+                                        curr_seq = len(routes) - 1
+                                        break
+                            if (len(routes[curr_seq]) <= buffer_size):
+                                if (len(routes[curr_seq]) < len(routes[curr_seq+1])):
+                                    vertical = False
+
                     else:
                         route = routes[curr_seq].copy()
                         coord = coords[curr_seq].copy()
                         for curr_col in range(num_columns):
-                            if ([curr_col, coord[-1][1]] not in coord):
-                                route.append(matrix[curr_col][coord[-1][1]])
-                                coord.append([curr_col,coord[-1][1]])
-                                if len(route) < buffer_size:
-                                    routes.append(route[:])  
-                                    coords.append(coord[:])
-                                    route.pop()
-                                    coord.pop()
-                                elif len(route) == buffer_size:
-                                    best_routes.append(route[:])
-                                    best_coords.append(coord[:])
-                                    routes.append(route[:])  
-                                    coords.append(coord[:])
-                                    route.pop()
-                                    coord.pop()
+                            if ([coord[-1][0], curr_col] not in coord):
+                                route.append(matrix[coord[-1][0]][curr_col])
+                                coord.append([coord[-1][0], curr_col])
+                                # Jika sudah mencapai panjang buffer atau panjang minimal rute
+                                if 2 <= len(route) <= buffer_size:
+                                        routes.append(route[:])  
+                                        coords.append(coord[:])
+                                        route.pop()
+                                        coord.pop()
                                 else:
-                                    curr_seq = len(routes) - 2
+                                    curr_seq = len(routes) - 1
                                     break
                         if (len(routes[curr_seq]) <= buffer_size):
                             if (len(routes[curr_seq]) < len(routes[curr_seq+1])):
-                                vertical = False
-
-                else:
-                    route = routes[curr_seq].copy()
-                    coord = coords[curr_seq].copy()
-                    for curr_row in range(num_rows):
-                        if ([coord[-1][0], curr_row] not in coord):
-                            route.append(matrix[coord[-1][0]][curr_row])
-                            coord.append([coord[-1][0], curr_row])
-                            # Jika sudah mencapai panjang buffer atau panjang minimal rute
-                            if len(route) < buffer_size:
-                                    routes.append(route[:])  
-                                    coords.append(coord[:])
-                                    route.pop()
-                                    coord.pop()
-                            elif len(route) == buffer_size:
-                                best_routes.append(route[:])
-                                best_coords.append(coord[:])
-                                routes.append(route[:])  
-                                coords.append(coord[:])
-                                route.pop()
-                                coord.pop()
-                            else:
-                                curr_seq = len(routes) - 2
-                                break
-                    if (len(routes[curr_seq]) <= buffer_size):
-                        if (len(routes[curr_seq]) < len(routes[curr_seq+1])):
-                            vertical = True
-                curr_seq += 1
-        return best_routes, best_coords
+                                vertical = True
+                    curr_seq += 1
+            return routes, coords
     
     def reward(self, path, sequences, rewards):
         total_reward = 0
@@ -148,7 +125,8 @@ class BruteForceSolver:
         print(max_reward)
         print(" ".join(best_path))
         for coord in coords[best_index]:
-            print(" ".join(map(str, coord)))
+            final_coord = [coord[1] + 1, coord[0] + 1]
+            print(" ".join(map(str, final_coord)))
         print("\n\n" + str(execution) + " ms") 
 
         return best_path, max_reward, best_index, coords, execution

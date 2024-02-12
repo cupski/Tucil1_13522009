@@ -20,13 +20,14 @@ class InputHandler:
 
         return menu
 
-    def generate_matrix(self, tokens, num_row, num_column):
-        input_token = tokens*100
-        # Mengacak urutan elemen
-        random_elements = random.sample(input_token, num_row*num_column)
-        matrix = [random_elements[i*num_row:(i+1)*num_row] for i in range(num_row)]
-        
+    def generate_matrix(self, tokens, num_column, num_row):
+        input_token = tokens * (num_row*num_column)
+        random_elements = random.sample(input_token, num_row * num_column)
+
+        matrix = [random_elements[i * num_column : (i + 1) * num_column] for i in range(num_row)]
+    
         return matrix
+
 
     def generate_sequences(self, tokens, sequence_size, max_length):
         sequences = []
@@ -54,18 +55,18 @@ class InputHandler:
 
         token = input("Masukkan Token: ")
         tokens = token.split()
-        while (len(tokens) != jmlh_token):
-            print("Masukan jumlah token unik harus sesuai")
+        while (len(tokens) != jmlh_token or (not all(len(token) == 2 for token in tokens)) or (not all(token.isalnum() for token in tokens)) or (len(set(tokens)) != len(tokens))):
+            print("Masukan Token Tidak Valid")
             token = input("Masukkan Token: ")
             tokens = token.split()
 
         buffer_size = int(input("Masukkan ukuran buffer: "))
         matrix_size = input("Masukkan ukuran matriks (jumlah baris dan kolom dipisahkan oleh spasi): ")
-        num_row, num_column = map(int, matrix_size.split())
+        num_column, num_row = map(int, matrix_size.split())
         sequence_size = int(input("Masukkan jumlah sekuens: "))
         max_sequence = int(input("Masukkan ukuran maksimal sekuens: "))
         
-        random_matrix = self.generate_matrix(tokens, num_row, num_column)
+        random_matrix = self.generate_matrix(tokens, num_column, num_row)
         random_sequences = self.generate_sequences(tokens, sequence_size, max_sequence)
         random_reward = self.generate_reward(sequence_size)
 
@@ -75,7 +76,7 @@ class InputHandler:
         filepath = "input/" + filename + ".txt"
         with open(filepath, 'r') as file:
             buffer_size = int(file.readline().strip())
-            num_row, num_column = map(int, file.readline().strip().split())
+            num_column, num_row = map(int, file.readline().strip().split())
             matrix = []
             for _ in range(num_column):
                 row = file.readline().strip().split()
@@ -92,7 +93,7 @@ class InputHandler:
 
         return buffer_size, matrix, sequences, rewards
 
-    def write_solution_to_file(self, matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution):
+    def save_to_file(self, matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution):
         simpan = input("Apakah ingin menyimpan solusi? (y/n)")
         if((simpan == "Y") or (simpan == "y")):
             filename = input("Masukkan Nama File (berekstensi .txt): ")
@@ -144,7 +145,7 @@ class InputHandler:
                 print("Reward:", rewards[i])
 
             best_path, max_reward, best_index, coords, execution =  self.brute.get_solution(matrix, buffer_size, sequences, rewards)
-            self.write_solution_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)
+            self.save_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)
         else:
             file = input("Masukkan Nama File (berekstensi .txt): ")
             buffer_size, matrix, sequences, rewards = self.input_file(file)
@@ -158,4 +159,4 @@ class InputHandler:
                 print("Reward:", rewards[i])
 
             best_path, max_reward, best_index, coords, execution =  self.brute.get_solution(matrix, buffer_size, sequences, rewards)
-            self.write_solution_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)
+            self.save_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)
