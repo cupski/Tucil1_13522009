@@ -1,1 +1,0 @@
-sekuens_size = int(input("Masukkan jumlah sekuens: "))
