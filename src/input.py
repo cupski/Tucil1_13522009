@@ -21,7 +21,7 @@ class InputHandler:
         return menu
 
     def generate_matrix(self, tokens, num_row, num_column):
-        input_token = tokens*num_row
+        input_token = tokens*100
         # Mengacak urutan elemen
         random_elements = random.sample(input_token, num_row*num_column)
         matrix = [random_elements[i*num_row:(i+1)*num_row] for i in range(num_row)]
@@ -71,17 +71,91 @@ class InputHandler:
 
         return random_matrix, random_sequences, random_reward, buffer_size
 
+    def input_file(self, filename):
+        filepath = "input/" + filename + ".txt"
+        with open(filepath, 'r') as file:
+            buffer_size = int(file.readline().strip())
+            num_row, num_column = map(int, file.readline().strip().split())
+            matrix = []
+            for _ in range(num_column):
+                row = file.readline().strip().split()
+                matrix.append(row)
+
+            total_sequences = int(file.readline().strip())
+            sequences = []
+            rewards = []
+            for _ in range(total_sequences):
+                sequence = file.readline().strip().split()
+                reward = int(file.readline().strip())
+                sequences.append(sequence)
+                rewards.append(reward)
+
+        return buffer_size, matrix, sequences, rewards
+
+    def write_solution_to_file(self, matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution):
+        simpan = input("Apakah ingin menyimpan solusi? (y/n)")
+        if((simpan == "Y") or (simpan == "y")):
+            filename = input("Masukkan Nama File (berekstensi .txt): ")
+            filepath = "output/" + filename + ".txt"
+            with open(filepath , 'w') as file:
+                file.write("Buffer Size: {}\n".format(buffer_size))
+                file.write("Matrix:\n")
+                for row in matrix:
+                    file.write(" ".join(row) + "\n")
+                
+                file.write("Sequences:\n")
+                for i, sequence in enumerate(sequences):
+                    file.write("Sequence {}: {}\n".format(i + 1, " ".join(sequence)))
+                    file.write("Reward: {}\n".format(rewards[i]))
+
+                file.write("\nSolusi Teroptimal:\n")
+                file.write("{}\n".format(max_reward))
+                file.write("{}\n".format(" ".join(best_path)))
+                for coord in coords[best_index]:
+                    file.write("{} {}\n".format(coord[0], coord[1]))
+                
+                file.write("{} ms\n".format(execution))
+        self.continue_menu()
+
+    def continue_menu(self):
+        print("\n----------Program----------")
+        print("1.Kembali ke Menu")
+        print("2.Keluar")
+
+        menu = int(input("Pilihan : "))
+        while (menu < 1 or menu > 2):
+            print("\nMasukan Tidak Valid\n")
+            menu = int(input("Pilihan : "))
+        if (menu == 1):
+            self.run()
+
+
     def run(self):
         user = self.list_menu()
         if user == 1:
-            matrix, sequences, reward, buffer = self.manual()
+            matrix, sequences, rewards, buffer_size = self.manual()
             print("Generated Matrix :")
             for row in matrix:
-                print(row)
+                print(" ".join(row))
             
-            print("Generated Sequence:")
-            for i in range(len(sequences)):
-                print(reward[i])
-                print(sequences[i])
+            print("\nGenerated Sequences:")
+            for i, sequence in enumerate(sequences):
+                print("Sequence", i + 1, ":", " ".join(sequence))
+                print("Reward:", rewards[i])
 
-            self.brute.get_solution(matrix, buffer, sequences, reward)
+            best_path, max_reward, best_index, coords, execution =  self.brute.get_solution(matrix, buffer_size, sequences, rewards)
+            self.write_solution_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)
+        else:
+            file = input("Masukkan Nama File (berekstensi .txt): ")
+            buffer_size, matrix, sequences, rewards = self.input_file(file)
+            print("Buffer Size:", buffer_size)
+            print("Matrix:")
+            for row in matrix:
+                print(" ".join(row))
+            print("\nSequences:")
+            for i, sequence in enumerate(sequences):
+                print("Sequence", i + 1, ":", " ".join(sequence))
+                print("Reward:", rewards[i])
+
+            best_path, max_reward, best_index, coords, execution =  self.brute.get_solution(matrix, buffer_size, sequences, rewards)
+            self.write_solution_to_file(matrix, buffer_size, sequences, rewards, best_path, max_reward, best_index, coords, execution)

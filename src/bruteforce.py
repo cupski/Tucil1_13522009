@@ -1,4 +1,5 @@
 import random
+import time
 
 class BruteForceSolver:
     def __init__(self, matrix, buffer_size, sequences, rewards):
@@ -112,11 +113,10 @@ class BruteForceSolver:
                             vertical = True
                 curr_seq += 1
         return best_routes, best_coords
-
-    def calculate_reward(self,path, sequences, rewards):
+    
+    def reward(self, path, sequences, rewards):
         total_reward = 0
-        for sequence in sequences:
-            idx = sequences.index(sequence)
+        for idx, sequence in enumerate(sequences):
             sequence_length = len(sequence)
             for i in range(len(path) - sequence_length + 1):
                 if path[i:i+sequence_length] == sequence:
@@ -125,21 +125,30 @@ class BruteForceSolver:
         return total_reward
 
 
-    def choose_best_path(self, possible_paths, sequences, rewards):
+    def best_path(self, possible_paths, sequences, rewards):
         max_reward = 0
-        best_path = None
-        for path in possible_paths:
-            reward = self.calculate_reward(path, sequences, rewards)
-            idx = possible_paths.index(path)
+        best_path = []
+        best_idx = None
+        for idx, path in enumerate(possible_paths):
+            reward = self.reward(path, sequences, rewards)
             if reward > max_reward:
                 max_reward = reward
                 best_path = path
                 best_idx = idx
         return best_path, max_reward, best_idx
 
-    def get_solution(self,matrix, buffer_size, sequences, rewards):
+
+    def get_solution(self, matrix, buffer_size, sequences, rewards):
+        start = time.time()
         routes, coords = self.get_routes(matrix, buffer_size)
-        best_path, max_reward, best_index = self.choose_best_path(routes, sequences, rewards)
-        print("Jalur terbaik:", best_path)
-        print(coords[best_index])
-        print("Reward tertinggi:", max_reward)
+        best_path, max_reward, best_index = self.best_path(routes, sequences, rewards)
+        end = time.time()
+        execution = round((end - start) * 1000, 3)
+        print("\nSolusi Teroptimal:")
+        print(max_reward)
+        print(" ".join(best_path))
+        for coord in coords[best_index]:
+            print(" ".join(map(str, coord)))
+        print("\n\n" + str(execution) + " ms") 
+
+        return best_path, max_reward, best_index, coords, execution

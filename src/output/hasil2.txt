@@ -1,0 +1,29 @@
+Buffer Size: 8
+Matrix:
+E9 E9 7A 55 E9 1C 7A
+1C 55 7A 55 BD E9 E9
+E9 E9 7A BD 55 E9 55
+55 55 1C E9 55 BD 7A
+BD 1C 1C 55 BD 7A E9
+BD 55 E9 55 1C 7A 55
+E9 E9 55 1C 7A 1C 1C
+Sequences:
+Sequence 1: 55 BD 7A 1C
+Reward: -25
+Sequence 2: 7A 1C
+Reward: 34
+Sequence 3: 55 BD 7A 1C
+Reward: 42
+
+Solusi Teroptimal:
+51
+E9 1C 55 E9 55 BD 7A 1C
+0 0
+1 0
+1 1
+0 1
+0 3
+2 3
+2 2
+3 2
+13929.95 ms
