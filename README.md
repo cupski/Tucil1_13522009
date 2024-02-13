@@ -33,37 +33,15 @@ Program menggunakan Command Line Interface(CLI):
 
 ## Usage
 ```shell
-git clone https://github.com/Akmal2205/Algeo02-22009
+git clone https://github.com/cupski/-Tucil1_13522009
 ```
-Buka folder tersebut dalam vscode atau ketik
+pindahkan direktori folder yang berisi kode python
 ```shell
-code .
-```
-### Buka terminal lalu,
-```shell
-cd Backend
+cd src
 ```
 ```shell
-cd project
+main.py
 ```
-```shell
-pip install django
-```
-```shell
-python manage.py runserver
-```
-### Buka terminal baru lalu,
-```shell
-cd FEALGEO
-```
-```shell
-npm create vite@latest
-```
-```shell
-npm run dev
-```
-### Akan muncul link local host yang dapat dibuka di browser.
-
 
 ## Project Status
 Project ini : Selesai.
