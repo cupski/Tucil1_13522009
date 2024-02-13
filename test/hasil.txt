@@ -24,4 +24,4 @@ Solusi Teroptimal:
 4 5
 2 5
 2 0
-178058.815 ms
+485.19 ms

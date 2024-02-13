@@ -35,7 +35,7 @@ class BruteForceSolver:
                     if vertical:
                         #elemen pertama
                         if first:
-                            for curr_row in range(num_columns):
+                            for curr_row in range(num_rows):
                                 if curr_row != 0:
                                     route.append(matrix[curr_row][col])
                                     coord.append([curr_row,col])
@@ -46,7 +46,7 @@ class BruteForceSolver:
                                         route.pop()
                                         coord.pop()
                                     else:
-                                        curr_seq = len(routes) - 1
+                                        curr_seq = len(routes) - 2
                                         break
                             first = False
                             vertical = False
@@ -63,7 +63,7 @@ class BruteForceSolver:
                                         route.pop()
                                         coord.pop()
                                     else:
-                                        curr_seq = len(routes) - 1
+                                        curr_seq = len(routes) - 2
                                         break
                             if (len(routes[curr_seq]) <= buffer_size):
                                 if (len(routes[curr_seq]) < len(routes[curr_seq+1])):
@@ -78,12 +78,12 @@ class BruteForceSolver:
                                 coord.append([coord[-1][0], curr_col])
                                 # Jika sudah mencapai panjang buffer atau panjang minimal rute
                                 if 2 <= len(route) <= buffer_size:
-                                        routes.append(route[:])  
-                                        coords.append(coord[:])
-                                        route.pop()
-                                        coord.pop()
+                                    routes.append(route[:])  
+                                    coords.append(coord[:])
+                                    route.pop()
+                                    coord.pop()
                                 else:
-                                    curr_seq = len(routes) - 1
+                                    curr_seq = len(routes) - 2
                                     break
                         if (len(routes[curr_seq]) <= buffer_size):
                             if (len(routes[curr_seq]) < len(routes[curr_seq+1])):
@@ -123,10 +123,14 @@ class BruteForceSolver:
         execution = round((end - start) * 1000, 3)
         print("\nSolusi Teroptimal:")
         print(max_reward)
-        print(" ".join(best_path))
-        for coord in coords[best_index]:
-            final_coord = [coord[1] + 1, coord[0] + 1]
-            print(" ".join(map(str, final_coord)))
-        print("\n\n" + str(execution) + " ms") 
+        if(max_reward > 0):
+            print(" ".join(best_path))
+            for coord in coords[best_index]:
+                final_coord = [coord[1] + 1, coord[0] + 1]
+                print(" ".join(map(str, final_coord)))
+            print("\n\n" + str(execution) + " ms") 
+        else:
+            print("Breach ini tidak memeiliki solusi")
+            print("\n\n" + str(execution) + " ms")
 
         return best_path, max_reward, best_index, coords, execution
