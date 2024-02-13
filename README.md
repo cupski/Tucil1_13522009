@@ -33,14 +33,17 @@ Program menggunakan Command Line Interface(CLI):
 
 ## Usage
 ```shell
-git clone https://github.com/cupski/-Tucil1_13522009
+git clone https://github.com/cupski/Tucil1_13522009.git
 ```
 pindahkan direktori folder yang berisi kode python
+```shell
+cd Tucil1_13522009
+```
 ```shell
 cd src
 ```
 ```shell
-main.py
+python main.py
 ```
 
 ## Project Status
