@@ -21,7 +21,7 @@ Cyberpunk 2077 Breach Protocol adalah permainan hacking di dalam permainan video
 
 
 ## Features
-Program menggunakan Command Line INterface(CLI):
+Program menggunakan Command Line Interface(CLI):
 - Manual input; User memasukkan token unik, ukuran matrix, jumlah dan ukuran maksimal sekuens, lalu akan dibuat matrix beserta sekuensnya secara otomatis.
 - FIle input; User mengupload file ber-ekstensi .txt pada src/input/ ".txt", pastikan format isi file seperti gambar dibawah ini.
 <img width="357" alt="image" src="https://github.com/cupski/-Tucil1_13522009/assets/118907510/4242ddcc-18d4-4cc6-a552-5b55b96079d8">
