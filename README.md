@@ -4,11 +4,8 @@ Cyberpunk 2077 Breach Protocol adalah permainan hacking di dalam permainan video
 * [General Info](#general-information)
 * [Technologies Used](#technologies-used)
 * [Features](#features)
-* [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Usage](#usage)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
 * [Contact](#contact)
 <!-- * [License](#license) -->
 
@@ -30,22 +27,8 @@ Program menggunakan Command Line INterface(CLI):
 <img width="357" alt="image" src="https://github.com/cupski/-Tucil1_13522009/assets/118907510/4242ddcc-18d4-4cc6-a552-5b55b96079d8">
 
 
-## Screenshots
-### Web View
-![Screenshot 2023-11-19 215612](https://github.com/Akmal2205/Algeo02-22009/assets/118907510/c57d875b-69f6-4082-a140-fb5e7d47f6ed)
-### Color Results
-![Screenshot 2023-11-19 122149](https://github.com/Akmal2205/Algeo02-22009/assets/118907510/93008701-e7c3-44b0-b825-75ad19f71b60)
-![Screenshot 2023-11-19 122202](https://github.com/Akmal2205/Algeo02-22009/assets/118907510/37b2f910-0b76-43c0-82d0-15d39a0e974c)
-### Texture Results
-![Screenshot 2023-11-19 122657](https://github.com/Akmal2205/Algeo02-22009/assets/118907510/7a553842-6964-40f8-89e0-9eb6ac1309ee)
-![Screenshot 2023-11-19 122800](https://github.com/Akmal2205/Algeo02-22009/assets/118907510/e4c76aa2-0238-4a8e-be80-61620673ed89)
-<!-- If you have screenshots you'd like to share, include them here. -->
-
-
 ## Setup
 1. Python latest version
-2. Django latest version
-3. npm latest version
 
 
 ## Usage
@@ -86,19 +69,9 @@ npm run dev
 Project ini : Selesai.
 
 
-## Room for Improvement
-1. Menangani kasus-kasus frontend website yang tak tertutupi seperti saat loading saat melakukan search, membuat frontend dengan lebih terstruktur.
-
-Room for improvement:
-- Menangani kasus-kasus frontend website yang tak tertutupi seperti saat loading saat melakukan search.
-- Membuat frontend dengan lebih terstruktur.
-
-To do:
-- Tampilan loading
-
 
 ## Contact
-Created by (cupski) Muhammad Yusuf Rafi/13522009, (fabianradenta) Fabian Radenta Bangun/13522105, (Akmal2205) Muhammad Syarafi Akmal/13522076.
+Created by (cupski) Muhammad Yusuf Rafi/13522009.
 
 
 <!-- Optional -->
